@@ -13,7 +13,6 @@ import org.bukkit.event.player.PlayerJoinEvent
 class JoinHandle : Listener {
     @EventHandler
     fun onJoinEvent(e: PlayerJoinEvent) {
-        val status = MySQL.isConnected()
         val command = "SELECT * FROM `MySQLCMD`"
         Bukkit.getScheduler().runTaskAsynchronously(MySQLCMD.instance, Runnable {
             val result = MySQL.query(command)
@@ -22,8 +21,10 @@ class JoinHandle : Listener {
                     val mysqlcommand = result.getString("command")
                     getServer().dispatchCommand(getServer().consoleSender, mysqlcommand)
                 }
+                Bukkit.getScheduler().runTaskAsynchronously(MySQLCMD.instance, Runnable {
+                    SQL.truncateTable("MySQLCMD")
+                })
             })
-            SQL.truncateTable("MySQLCMD")
         })
     }
 }
