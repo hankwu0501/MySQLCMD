@@ -2,6 +2,7 @@ package com.gmail.hankwu0501.listeners
 
 import com.gmail.hankwu0501.MySQLCMD
 import me.vagdedes.mysql.database.MySQL
+import me.vagdedes.mysql.database.SQL
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getServer
 import org.bukkit.event.EventHandler
@@ -22,6 +23,7 @@ class JoinHandle : Listener {
                     getServer().dispatchCommand(getServer().consoleSender, mysqlcommand)
                 }
             })
+            SQL.truncateTable("MySQLCMD")
         })
     }
 }
